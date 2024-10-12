@@ -8,6 +8,7 @@ function App() {
   // Declare state variables
   const [inputValue, setInputValue] = useState('');
   const [entries, setEntries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   // Function to handle input change
   const handleInputChange = (e) => {
@@ -15,13 +16,17 @@ function App() {
   };
 
   // Function to add new entry to the database
-  const addEntry = () => {
+  const addEntry = async () => {
     if (inputValue.trim() === '') return; // Prevent empty entries
+
+    setIsLoading(true); // Show loading indicator
 
     const entriesRef = ref(database, 'entries');
     const newEntryRef = ref(database, `entries/${Date.now()}`);
-    set(newEntryRef, inputValue);
+    await set(newEntryRef, inputValue); // Send data to Firebase
     setInputValue(''); // Clear input after adding
+
+    setIsLoading(false); // Hide loading indicator
   };
 
   // Listen for changes in the database
@@ -53,6 +58,7 @@ function App() {
 
       {/* Text Box component at the bottom */}
       <div className="text-box">
+        {isLoading && <div className="loading-icon">🔄</div>} {/* Loading icon */}
         <input 
           type="text" 
           placeholder="Enter text here..." 

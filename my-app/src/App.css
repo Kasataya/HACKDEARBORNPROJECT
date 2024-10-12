@@ -46,3 +46,22 @@
   overflow-y: auto; /* Allows scrolling if entries exceed height */
   height: 400px; /* Adjust the height */
 }
+
+.message-input {
+  position: relative;
+}
+
+.loading-icon {
+  position: absolute;
+  top: -20px; /* Adjust position above the input box */
+  right: 10px; /* Adjust right position */
+  font-size: 20px; /* Adjust size */
+}
+
+.messages {
+  margin-top: 20px; /* Space between input and messages */
+}
+
+.message {
+  margin-bottom: 5px; /* Space between messages */
+}
