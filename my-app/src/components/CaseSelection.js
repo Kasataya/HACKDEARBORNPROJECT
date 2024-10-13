@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './CaseSelection.css'; // Import the CSS file
 
 const CaseSelection = ({ onCaseSelect }) => {
   const [cases, setCases] = useState([]);
@@ -23,21 +24,23 @@ const CaseSelection = ({ onCaseSelect }) => {
   }
 
   return (
-    <div>
-      <h1>Select a Case</h1>
-      {cases.length > 0 ? (
-        <ul>
-          {cases.map((caseItem) => (
-            <li key={caseItem.name}>
-              <button onClick={() => onCaseSelect(caseItem.name)}>
-                {caseItem.name}: {caseItem.description}
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No cases available</p>
-      )}
+    <div className="case-selection-container">
+      <h1 className="title">Select a Case</h1>
+      <div className="main-content">
+        {cases.length > 0 ? (
+          <ul className="case-list">
+            {cases.map((caseItem) => (
+              <li key={caseItem.name} className="case-item">
+                <button className="case-button" onClick={() => onCaseSelect(caseItem.name)}>
+                  {caseItem.name}: {caseItem.description}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No cases available</p>
+        )}
+      </div>
     </div>
   );
 };

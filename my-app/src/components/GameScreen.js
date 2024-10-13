@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './GameScreen.css'; // Import the CSS file
 
 const GameScreen = ({ gameId, playerId, role, onGameEnd }) => {
   const [argument, setArgument] = useState('');
@@ -57,27 +58,32 @@ const GameScreen = ({ gameId, playerId, role, onGameEnd }) => {
   };
 
   return (
-    <div>
-      <h2>Submit your argument ({role})</h2>
+    <div className="game-screen-container">
+      <h2 className="title">Submit Your Argument ({role})</h2>
       <textarea
+        className="argument-input"
         value={argument}
         onChange={e => setArgument(e.target.value)}
         disabled={currentTurn !== playerId || isLoading}
+        placeholder="Enter your argument here..."
       />
       <button
+        className="submit-button"
         onClick={handleArgumentSubmit}
         disabled={currentTurn !== playerId || isLoading}
       >
         {isLoading ? 'Submitting...' : 'Submit Argument'}
       </button>
-      <p>{currentTurn === playerId ? 'Your turn' : 'Waiting for opponent...'}</p>
-      <p>Turn count: {turnCount}/6</p>
+      <p className={`turn-status ${currentTurn === playerId ? 'your-turn' : 'waiting'}`}>
+        {currentTurn === playerId ? 'Your turn' : 'Waiting for opponent...'}
+      </p>
+      <p className="turn-count">Turn count: {turnCount}/6</p>
       {opponentArguments.length > 0 && (
-        <div>
+        <div className="opponent-arguments">
           <h3>Opponent's Arguments:</h3>
-          <ul>
+          <ul className="opponent-argument-list">
             {opponentArguments.map((arg, index) => (
-              <li key={index}>{arg}</li>
+              <li key={index} className="opponent-argument-item">{arg}</li>
             ))}
           </ul>
         </div>
