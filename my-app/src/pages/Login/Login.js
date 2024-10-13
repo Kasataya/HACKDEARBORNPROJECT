@@ -6,22 +6,29 @@ import { auth } from '../../firebase'; // Import Firebase
 
 function App() {
   return (
+
+// Game structure
 <div className= "columns">
+<div className="rows">
     <div className= "wrapper">
         <form action="">
-          <h1>User-1</h1>
-
+          <h1>Defendant2</h1>
           <div className="input-box">
-                <input type="text" placeholder='....Input' required/>
+          <textarea placeholder="Your text here"></textarea>
           </div>
-
-
-          <button type='submit'>Submit Prompt</button>
-
-
-
+          <button type='submit'>Submit argument</button>
         </form>
     </div>
+
+    <div className= "wrapper">
+        <form action="">
+          <div className="input-bo">
+                <p>Timer Component will go here</p>
+          </div>
+        </form>
+    </div>
+
+</div>
 
 <div class= "rows">
     <div className= "wrapper">
@@ -33,9 +40,16 @@ function App() {
     </div>
     <div className= "wrapper">
         <form action="">
-          <h1>AI</h1>
+          <h1>AIJudge</h1>
           <div className="input-box">
-                <input type="text" placeholder='AI JUDGING .....' required/>
+          <textarea placeholder="judging................"></textarea>
+          </div>
+        </form>
+    </div>
+    <div className= "wrapper">
+        <form action="">
+          <div className="input-bo">
+                <p>Turn count</p>
           </div>
         </form>
     </div>
@@ -43,21 +57,29 @@ function App() {
 </div>
 
 
-
+<div className="rows">
     <div className= "wrapper">
         <form action="">
-          <h1>User-2</h1>
+          <h1>Defendant</h1>
 
           <div className="input-box">
-                <input type="text" placeholder='....Input' required/>
+          <textarea placeholder="Your text here"></textarea>
           </div>
 
 
-          <button type='submit'>Submit Prompt</button>
+          <button type='submit'>Submit argument</button>
 
 
 
         </form>
+    </div>
+    <div className= "wrapper">
+        <form action="">
+          <div className="input-bo">
+                <p>Timer Component will go here</p>
+          </div>
+        </form>
+    </div>
     </div>
 </div>
 
