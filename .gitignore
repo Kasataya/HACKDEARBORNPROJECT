@@ -10,6 +10,7 @@ ENV/
 venv.bak/
 venv.bak/
 *.env
+
 config.py
 
 # Byte-compiled / optimized / DLL files
