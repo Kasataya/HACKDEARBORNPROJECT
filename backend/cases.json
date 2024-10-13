@@ -1,0 +1,32 @@
+[
+    {
+        "case_name": "Case A",
+        "description": "A dispute over a breached contract between two companies regarding the delivery of goods.",
+        "plaintiff_file": "Plaintiff claims the defendant breached the contract by failing to deliver the goods on time, causing financial losses.",
+        "defendant_file": "Defendant argues that the delay was due to unforeseen circumstances beyond their control and denies responsibility for the losses."
+    },
+    {
+        "case_name": "Case B",
+        "description": "A personal injury lawsuit involving a slip and fall incident in a supermarket.",
+        "plaintiff_file": "Plaintiff claims that the supermarket was negligent in maintaining a safe environment, leading to a slip and fall that caused severe injuries.",
+        "defendant_file": "Defendant argues that the plaintiff was not paying attention and the area was clearly marked with a wet floor sign."
+    },
+    {
+        "case_name": "Case C",
+        "description": "A copyright infringement case where an artist accuses a company of using their work without permission.",
+        "plaintiff_file": "Plaintiff claims that the defendant used their artwork in a marketing campaign without obtaining proper licensing, violating copyright laws.",
+        "defendant_file": "Defendant argues that the artwork used was altered significantly enough to be considered a new creation and does not infringe on the plaintiff's rights."
+    },
+    {
+        "case_name": "Case D",
+        "description": "A defamation case where a business owner is suing a former employee for damaging their reputation online.",
+        "plaintiff_file": "Plaintiff claims that the defendant made false and damaging statements about their business on social media, resulting in a loss of customers.",
+        "defendant_file": "Defendant argues that the statements made were based on true experiences and are protected as free speech."
+    },
+    {
+        "case_name": "Case E",
+        "description": "A property dispute between neighbors regarding the boundaries of their respective properties.",
+        "plaintiff_file": "Plaintiff claims that the defendant has built a fence that encroaches on their land, violating property boundaries.",
+        "defendant_file": "Defendant argues that the fence was built within the correct boundaries based on a land survey they commissioned."
+    }
+]

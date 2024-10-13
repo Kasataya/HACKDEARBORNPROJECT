@@ -1,0 +1,75 @@
+/* src/pages/LobbyCreation.css */
+
+.lobby-creation-container {
+    text-align: center;
+    padding: 20px;
+    /* background: radial-gradient(circle, #3a291d, #241911); */
+}
+
+.header {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 48px;
+    color: #fff;
+    margin: 0;
+}
+
+.main-content {
+    margin: 20px auto;
+}
+
+.lobby-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin: 10px 0;
+    width: 80%; /* Adjust as needed */
+}
+
+.prompt, .rounds, .time {
+    font-size: 18px;
+    color: #fff;
+    margin: 0;
+}
+.prompt-input, .rounds-select, .time-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.create-lobby-button {
+    background-color: #ffffff;
+    color: #241911;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.create-lobby-button:hover {
+    background-color: #cecece;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.back-button {
+    text-decoration: none;
+    color: #241911;
+    font-size: 16px;
+}
