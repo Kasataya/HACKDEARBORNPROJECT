@@ -9,47 +9,67 @@ import VerdictScreen from './components/VerdictScreen';
 
 function App() {
   const [gameId, setGameId] = useState(null);
-  const [playerId, setPlayerId] = useState(null);  // Dynamically set player ID
-  const [role, setRole] = useState(null);  // Set role dynamically (Plaintiff/Defendant)
+  const [playerId, setPlayerId] = useState(null);
+  const [role, setRole] = useState(null);
   const [showVerdict, setShowVerdict] = useState(false);
   const [caseDetails, setCaseDetails] = useState(null);
   const [caseFile, setCaseFile] = useState(null);
+  const [waitingForOpponent, setWaitingForOpponent] = useState(false);
 
   // Handle case selection and game start
   const handleCaseSelect = (caseName) => {
-    const playerRole = window.prompt("Enter your role (Plaintiff or Defendant):");  // Allow player to choose role
+    const playerRole = window.prompt("Enter your role (Plaintiff or Defendant):");
     if (playerRole !== "Plaintiff" && playerRole !== "Defendant") {
       alert("Invalid role. Please choose either 'Plaintiff' or 'Defendant'.");
       return;
     }
-    const playerId = playerRole === "Plaintiff" ? "player1_id" : "player2_id";  // Assign player ID based on role
     setRole(playerRole);
-    setPlayerId(playerId);
 
     // Start game by fetching case details
     axios.post('http://localhost:5000/api/start_game', {
-      game_id: 'game1',
       case_name: caseName,
-      player1_id: 'player1_id',  // Static player IDs for now
-      player2_id: 'player2_id'
+      player_role: playerRole
     })
     .then(response => {
-      setGameId('game1');
-      setCaseDetails({
-        name: caseName,
-        description: response.data.case_description,
-      });
-      if (playerRole === "Plaintiff") {
-        setCaseFile(response.data.plaintiff_file);  // Show plaintiff file
+      setGameId(response.data.game_id);
+      setPlayerId(response.data.player_id);
+
+      if (response.data.message === "Waiting for an opponent to join...") {
+        alert("Waiting for an opponent to join...");
+        setWaitingForOpponent(true);
+        // Polling to check when the opponent joins
+        const intervalId = setInterval(() => {
+          axios.post('http://localhost:5000/api/game_state', { game_id: response.data.game_id })
+            .then(res => {
+              if (res.data.case_description) {
+                // Opponent has joined
+                setWaitingForOpponent(false);
+                setCaseDetails({
+                  name: caseName,
+                  description: res.data.case_description,
+                });
+                setCaseFile(response.data.case_file);
+                clearInterval(intervalId);
+              }
+            })
+            .catch(err => {
+              // Game not yet started
+            });
+        }, 3000); // Check every 3 seconds
       } else {
-        setCaseFile(response.data.defendant_file);  // Show defendant file
+        setCaseDetails({
+          name: caseName,
+          description: response.data.case_description,
+        });
+        setCaseFile(response.data.case_file);
       }
     })
     .catch(error => console.error('Error starting game:', error));
   };
 
   const handleArgumentSubmit = () => {
-    setShowVerdict(true);  // Show verdict after submitting arguments
+    // Logic to decide when to show the verdict
+    setShowVerdict(true);
   };
 
   return (
@@ -69,6 +89,8 @@ function App() {
             <div>
               {!gameId ? (
                 <CaseSelection onCaseSelect={handleCaseSelect} />
+              ) : waitingForOpponent ? (
+                <p>Waiting for an opponent to join...</p>
               ) : !showVerdict ? (
                 <>
                   <h2>Case: {caseDetails?.name}</h2>
