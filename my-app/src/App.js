@@ -17,7 +17,6 @@ function App() {
   const [caseFile, setCaseFile] = useState(null);
   const [waitingForOpponent, setWaitingForOpponent] = useState(false);
 
-  // Handle case selection and game start
   const handleCaseSelect = (caseName) => {
     const playerRole = window.prompt("Enter your role (Plaintiff or Defendant):");
     if (playerRole !== "Plaintiff" && playerRole !== "Defendant") {
@@ -26,7 +25,6 @@ function App() {
     }
     setRole(playerRole);
 
-    // Start game by fetching case details
     axios.post('http://localhost:5000/api/start_game', {
       case_name: caseName,
       player_role: playerRole
@@ -36,27 +34,8 @@ function App() {
       setPlayerId(response.data.player_id);
 
       if (response.data.message === "Waiting for an opponent to join...") {
-        alert("Waiting for an opponent to join...");
         setWaitingForOpponent(true);
-        // Polling to check when the opponent joins
-        const intervalId = setInterval(() => {
-          axios.post('http://localhost:5000/api/game_state', { game_id: response.data.game_id })
-            .then(res => {
-              if (res.data.case_description) {
-                // Opponent has joined
-                setWaitingForOpponent(false);
-                setCaseDetails({
-                  name: caseName,
-                  description: res.data.case_description,
-                });
-                setCaseFile(response.data.case_file);
-                clearInterval(intervalId);
-              }
-            })
-            .catch(err => {
-              // Game not yet started
-            });
-        }, 3000); // Check every 3 seconds
+        pollForOpponent(response.data.game_id);
       } else {
         setCaseDetails({
           name: caseName,
@@ -68,8 +47,27 @@ function App() {
     .catch(error => console.error('Error starting game:', error));
   };
 
-  const handleArgumentSubmit = () => {
-    // Logic to decide when to show the verdict
+  const pollForOpponent = (gameId) => {
+    const intervalId = setInterval(() => {
+      axios.post('http://localhost:5000/api/game_state', { game_id: gameId })
+        .then(res => {
+          if (res.data.case_description) {
+            setWaitingForOpponent(false);
+            setCaseDetails({
+              name: res.data.case_name,
+              description: res.data.case_description,
+            });
+            setCaseFile(res.data.case_file);
+            clearInterval(intervalId);
+          }
+        })
+        .catch(err => {
+          // Game not yet started
+        });
+    }, 3000);
+  };
+
+  const handleGameEnd = () => {
     setShowVerdict(true);
   };
 
@@ -102,7 +100,7 @@ function App() {
                     gameId={gameId}
                     playerId={playerId}
                     role={role}
-                    onSubmit={handleArgumentSubmit}
+                    onGameEnd={handleGameEnd}
                   />
                 </>
               ) : (
