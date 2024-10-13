@@ -1,0 +1,82 @@
+/* src/HomePage.css */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: radial-gradient(circle, #3a291d, #241911);
+    /* background-image: url('https://cdn.discordapp.com/attachments/995073814205579305/1294851437913706651/2024-10-12_22-35-22_8062.png?ex=670c83df&is=670b325f&hm=01ff73856558e9d0dcdeaf56260aa15171e02bd8737a3dd3754553b2512dfdd3&');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;  */
+  }
+  
+  .home-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .header {
+    background-color: rgba(0, 0, 0, 0.2); /* 20% opacity */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+  }
+  
+  .title {
+    font-size: 48px;
+    color: #fff;
+    margin: 0;
+    opacity: 100%;
+
+  }
+  
+  .subtitle {
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .main-content {
+    margin: 20px auto;
+  }
+  
+  .button-container {
+    margin: 20px 0;
+    display: flex; /* Enable flexbox layout */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center align buttons horizontally (optional) */
+  }
+  
+  .play-button,
+  .join-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .play-button:hover,
+  .join-button:hover {
+    background-color: #45a049;
+  }
+  
+  .rules {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.2); /* 20% opacity */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
