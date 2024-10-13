@@ -1,47 +1,33 @@
-// src/pages/Login.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import './Login.css'
+import { FaUser,FaLock } from "react-icons/fa";
 
-function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // You can add authentication logic here
-    // For now, let's assume successful login
-    if (username && password) {
-      navigate('/home'); // Navigate to the home page after successful login
-    }
-  };
-
+function App() {
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div className= "wrapper">
+        <form action="">
+          <h1>Login</h1>
+          <div className="input-box">
+                <input type="text" placeholder='Username' required/>
+                <FaUser className='icon'/>
+          </div>
+          <div className="input-box">
+                <input type="password" placeholder='Password' required/>
+                <FaLock className='icon'/>
+          </div>
+          <div className="remember-forgot">
+                <label><input type='checkbox' />Rememeber me</label>
+                <a href='#'>Forgot password?</a>
+          </div>
+
+          <button type='submit'>Login</button>
+
+          <div className="register-link">
+            <p>Dont have an account? <a href='#'>Register</a></p>
+          </div>
+        </form>
     </div>
   );
 }
 
-export default Login;
+export default App;
