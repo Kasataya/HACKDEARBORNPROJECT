@@ -3,26 +3,21 @@
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(270deg, #3a291d, #241911, #3a291d);
-  background-size: 600% 600%; /* Stretch the background to allow movement */
+  background: radial-gradient(circle, #3a291d, #241911);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  animation: waveBackground 45s ease infinite; /* Infinite wave-like animation */
+  animation: fadeIn 2s ease-in; /* Fade-in for the body */
 }
 
-/* Keyframes to create a wave-like gradient movement */
-@keyframes waveBackground {
+@keyframes fadeIn {
   0% {
-    background-position: 0% 50%; /* Start from left */
-  }
-  50% {
-    background-position: 100% 50%; /* Move to right */
+    opacity: 0;
   }
   100% {
-    background-position: 0% 50%; /* Move back to left */
+    opacity: 1;
   }
 }
 
