@@ -1,11 +1,13 @@
 // src/pages/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import gameLogo from './gameLogo.png';
 import './Home.css'; // Import a CSS file for styling
 
 function Home() {
   return (
     <div className="home-container">
+      <img src={gameLogo} alt="Game Logo" className="game-logo" />
       <header className="header">
         <h1 className="title">JudgedByAI</h1>
         <p className="subtitle">Debate your Friends!</p>
