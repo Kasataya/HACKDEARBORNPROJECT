@@ -35,9 +35,6 @@ function Home() {
           </ul>
         </div>
       </main>
-      <footer className="footer">
-        <p>©hey there</p>
-      </footer>
     </div>
   );
 }
