@@ -7,7 +7,7 @@ const CaseSelection = ({ onCaseSelect }) => {
 
   // Fetch available cases from the Flask backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/cases') // Replace with your backend's URL
+    axios.get('http://localhost:5000/api/cases')
       .then(response => {
         setCases(response.data);
         setLoading(false);
