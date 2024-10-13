@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import CaseSelection from './components/CaseSelection';
 import GameScreen from './components/GameScreen';
 import VerdictScreen from './components/VerdictScreen';
+import './App.css'; // Importing the CSS file
 
 function App() {
   const [gameId, setGameId] = useState(null);
@@ -72,15 +73,12 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/game">Game</Link> {/* New link for the game route */}
-        </nav>
+      <Link to="/" className="back-button">Back to Home</Link>
+      <div > {/* Apply the app-container class */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={
-            <div>
+            <div className="app-container">
               {!gameId ? (
                 <CaseSelection onCaseSelect={handleCaseSelect} />
               ) : waitingForOpponent ? (
