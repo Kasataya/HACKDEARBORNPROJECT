@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Add Axios import
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
@@ -10,27 +10,67 @@ import VerdictScreen from './components/VerdictScreen';
 
 function App() {
   const [gameId, setGameId] = useState(null);
-  const [playerId, setPlayerId] = useState('player1_id'); // Placeholder for now
+  const [playerId, setPlayerId] = useState(null);
   const [role, setRole] = useState(null);
   const [showVerdict, setShowVerdict] = useState(false);
+  const [caseDetails, setCaseDetails] = useState(null);
+  const [caseFile, setCaseFile] = useState(null);
+  const [waitingForOpponent, setWaitingForOpponent] = useState(false);
 
+  // Handle case selection and game start
   const handleCaseSelect = (caseName) => {
-    // Start the game by calling the Flask backend
+    const playerRole = window.prompt("Enter your role (Plaintiff or Defendant):");
+    if (playerRole !== "Plaintiff" && playerRole !== "Defendant") {
+      alert("Invalid role. Please choose either 'Plaintiff' or 'Defendant'.");
+      return;
+    }
+    setRole(playerRole);
+
+    // Start game by fetching case details
     axios.post('http://localhost:5000/api/start_game', {
-      game_id: 'game1', // Static game ID for now
       case_name: caseName,
-      player1_id: 'player1_id',
-      player2_id: 'player2_id'
+      player_role: playerRole
     })
     .then(response => {
-      setGameId('game1'); // Using a static game ID for now
-      setRole('Plaintiff'); // Static role for now, adjust based on backend logic
+      setGameId(response.data.game_id);
+      setPlayerId(response.data.player_id);
+
+      if (response.data.message === "Waiting for an opponent to join...") {
+        alert("Waiting for an opponent to join...");
+        setWaitingForOpponent(true);
+        // Polling to check when the opponent joins
+        const intervalId = setInterval(() => {
+          axios.post('http://localhost:5000/api/game_state', { game_id: response.data.game_id })
+            .then(res => {
+              if (res.data.case_description) {
+                // Opponent has joined
+                setWaitingForOpponent(false);
+                setCaseDetails({
+                  name: caseName,
+                  description: res.data.case_description,
+                });
+                setCaseFile(response.data.case_file);
+                clearInterval(intervalId);
+              }
+            })
+            .catch(err => {
+              // Game not yet started
+            });
+        }, 3000); // Check every 3 seconds
+      } else {
+        setCaseDetails({
+          name: caseName,
+          description: response.data.case_description,
+        });
+        setCaseFile(response.data.case_file);
+      }
     })
     .catch(error => console.error('Error starting game:', error));
   };
 
   const handleArgumentSubmit = () => {
-    setShowVerdict(true); // Transition to verdict display after argument submission
+    // Logic to decide when to show the verdict
+    setShowVerdict(true);
   };
 
   return (
@@ -50,8 +90,21 @@ function App() {
             <div>
               {!gameId ? (
                 <CaseSelection onCaseSelect={handleCaseSelect} />
+              ) : waitingForOpponent ? (
+                <p>Waiting for an opponent to join...</p>
               ) : !showVerdict ? (
-                <GameScreen gameId={gameId} playerId={playerId} role={role} onSubmit={handleArgumentSubmit} />
+                <>
+                  <h2>Case: {caseDetails?.name}</h2>
+                  <p>Description: {caseDetails?.description}</p>
+                  <p>Your role: {role}</p>
+                  <p>Your case file: {caseFile}</p>
+                  <GameScreen
+                    gameId={gameId}
+                    playerId={playerId}
+                    role={role}
+                    onSubmit={handleArgumentSubmit}
+                  />
+                </>
               ) : (
                 <VerdictScreen gameId={gameId} />
               )}
