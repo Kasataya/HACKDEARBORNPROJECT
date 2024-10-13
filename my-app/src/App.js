@@ -3,6 +3,7 @@ import axios from 'axios'; // Add Axios import
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
+import LobbyCreation from './pages/LobbyCreation/LobbyCreation';
 import CaseSelection from './components/CaseSelection';
 import GameScreen from './components/GameScreen';
 import VerdictScreen from './components/VerdictScreen';
@@ -38,11 +39,13 @@ function App() {
         <nav>
           <Link to="/">Login</Link>
           <Link to="/home">Home</Link>
+          <Link to="/lobbyCreation">LobbyCreation</Link>
           <Link to="/game">Game</Link> {/* New link for the game route */}
         </nav>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/lobbyCreation" element={<LobbyCreation />} />
           <Route path="/game" element={
             <div>
               {!gameId ? (
