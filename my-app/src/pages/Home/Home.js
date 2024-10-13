@@ -12,8 +12,15 @@ function Home() {
       </header>
       <main className="main-content">
         <div className="button-container">
-          <button className="play-button">Play Now</button>
-          <button className="join-button">Create Lobby</button>
+          <div className="input-container">
+            <input
+              type="text"
+              className="game-code-input"
+              placeholder="Enter Game Code"
+            />
+            <button className="play-button">Play Now</button>
+          </div>
+          <Link to="/lobbycreation" className="join-button">Create Lobby</Link>
         </div>
         <div className="rules">
           <h2>How to Play</h2>
