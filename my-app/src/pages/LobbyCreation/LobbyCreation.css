@@ -34,11 +34,13 @@
     width: 80%; /* Adjust as needed */
 }
 
-.prompt, .rounds, .time {
-    font-size: 18px;
-    color: #fff;
-    margin: 0;
+.form-group label {
+    display: block; /* Make labels take full width */
+    margin-bottom: 5px; /* Space between label and input/select */
+    font-size: 18px; /* Font size for labels */
+    color: #ffffff; /* Change color to fit your design */
 }
+
 .prompt-input, .rounds-select, .time-select {
     width: 100%;
     padding: 10px;
@@ -56,6 +58,7 @@
     font-size: 18px;
     cursor: pointer;
     margin: 10px 0;
+    width: 45%;
 }
 
 .create-lobby-button:hover {
@@ -69,7 +72,15 @@
 }
 
 .back-button {
-    text-decoration: none;
+    position: absolute; /* Position the button absolutely */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    background-color: #ffffff;
     color: #241911;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
     font-size: 16px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from the link */
 }

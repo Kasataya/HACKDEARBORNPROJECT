@@ -16,6 +16,7 @@ function LobbyCreation() {
 
   return (
     <div className="lobby-creation-container">
+      <Link to="/home" className="back-button">Back to Home</Link>
       <header className="header">
         <h1 className="title">Create Lobby</h1>
       </header>
@@ -62,7 +63,6 @@ function LobbyCreation() {
         </form>
       </main>
       <footer className="footer">
-        <Link to="/" className="back-button">Back to Home</Link>
       </footer>
     </div>
   );
