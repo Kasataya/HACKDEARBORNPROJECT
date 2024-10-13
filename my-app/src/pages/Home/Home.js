@@ -22,7 +22,7 @@ function Home() {
             />
             <button className="play-button">Play Now</button>
           </div>
-          <Link to="/lobbycreation" className="join-button">Create Lobby</Link>
+          <Link to="/game" className="join-button">Create Lobby</Link>
         </div>
         <div className="rules">
           <h2>How to Play</h2>
