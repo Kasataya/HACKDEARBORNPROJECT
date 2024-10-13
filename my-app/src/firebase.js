@@ -1,21 +1,22 @@
-// src/firebase.js
+// firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // Import Firebase Auth
+import { getFirestore } from "firebase/firestore"; // Import Firestore
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC6mDHbL8gbTYAVZ3moYAHISqiPe5yW3AE",
+  authDomain: "judgedbyai.firebaseapp.com",
+  databaseURL: "https://judgedbyai-default-rtdb.firebaseio.com",
+  projectId: "judgedbyai",
+  storageBucket: "judgedbyai.appspot.com",
+  messagingSenderId: "1087198177229",
+  appId: "1:1087198177229:web:a43bd1e6c557782c6cc684",
+  measurementId: "G-JDKTGG6YW8"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-const db = getFirestore(app);
+const db = getFirestore(app); // Initialize Firestore
 
-export { auth, provider, db };
+export { auth, db }; // Export both auth and db

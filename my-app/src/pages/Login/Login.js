@@ -1,6 +1,8 @@
-import React from 'react';
-import './Login.css'
-import { FaUser,FaLock } from "react-icons/fa";
+import React, { useState } from 'react';
+import './Login.css';
+import { FaUser, FaLock } from "react-icons/fa";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from '../../firebase'; // Import Firebase
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
                 <FaLock className='icon'/>
           </div>
           <div className="remember-forgot">
-                <label><input type='checkbox' />Rememeber me</label>
+                <label><input type='checkbox' />Remember me</label>
                 <a href='#'>Forgot password?</a>
           </div>
 
@@ -24,6 +26,9 @@ function App() {
 
           <div className="register-link">
             <p>Dont have an account? <a href='#'>Register</a></p>
+          </div>
+          <div className="register-link">
+            <p>Log in with google <a href='#'>Google</a></p>
           </div>
         </form>
     </div>
