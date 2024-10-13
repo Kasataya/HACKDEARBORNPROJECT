@@ -1,21 +1,15 @@
-import json
-import openai
-from config import GPT_API_KEY
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Enable CORS to allow requests from your React frontend
 
-# Load cases from a JSON file
+# Load cases from the JSON file
 with open('cases.json', 'r') as f:
     cases = json.load(f)
 
-# Set the OpenAI API key
-openai.api_key = GPT_API_KEY
-
-# In-memory storage for sessions and games
-player_sessions = {}
+# In-memory storage for game data
 games = {}
 
 # Endpoint to get available cases
@@ -24,72 +18,37 @@ def get_available_cases():
     available_cases = [{"name": case["case_name"], "description": case["description"]} for case in cases]
     return jsonify(available_cases)
 
-# Endpoint to register a player
-@app.route('/api/register_player', methods=['POST'])
-def register_player():
-    data = request.json
-    player_id = data.get("player_id")
-    player_name = data.get("player_name")
-
-    if not player_id or not player_name:
-        return jsonify({"error": "Player ID and name are required"}), 400
-
-    player_sessions[player_id] = {"name": player_name}
-    return jsonify({"message": "Player registered successfully", "player_id": player_id})
-
-# Endpoint to assign a case to players
-@app.route('/api/assign_case', methods=['POST'])
-def assign_case():
-    data = request.json
-    case_name = data.get("case_name")
-    player1 = data.get("player1")
-    player2 = data.get("player2")
-
-    if not case_name or not player1 or not player2:
-        return jsonify({"error": "Invalid input"}), 400
-
-    selected_case = next((case for case in cases if case["case_name"] == case_name), None)
-
-    if not selected_case:
-        return jsonify({"error": "Case not found"}), 404
-
-    player1_data = {
-        "role": "Plaintiff",
-        "case_file": selected_case["plaintiff_file"]
-    }
-
-    player2_data = {
-        "role": "Defendant",
-        "case_file": selected_case["defendant_file"]
-    }
-
-    return jsonify({"player1": player1_data, "player2": player2_data})
-
-# Endpoint to start a game
+# Endpoint to start a game and return case details
 @app.route('/api/start_game', methods=['POST'])
 def start_game():
     data = request.json
-    game_id = data.get("game_id")
-    case_name = data.get("case_name")
-    player1_id = data.get("player1_id")
-    player2_id = data.get("player2_id")
+    case_name = data.get('case_name')
+    player1_id = data.get('player1_id')
+    player2_id = data.get('player2_id')
 
-    if not game_id or not case_name or not player1_id or not player2_id:
-        return jsonify({"error": "All game parameters are required"}), 400
-
-    selected_case = next((case for case in cases if case["case_name"] == case_name), None)
+    # Find the selected case by case_name
+    selected_case = next((case for case in cases if case['case_name'] == case_name), None)
 
     if not selected_case:
         return jsonify({"error": "Case not found"}), 404
 
+    # Create the game
+    game_id = "game1"  # Static game_id for now, can be dynamic
     games[game_id] = {
         "case": selected_case,
-        "turn": player1_id,
-        "player1": {"id": player1_id, "role": "Plaintiff", "case_file": selected_case["plaintiff_file"], "arguments": []},
-        "player2": {"id": player2_id, "role": "Defendant", "case_file": selected_case["defendant_file"], "arguments": []}
+        "turn": player1_id,  # Start with player 1 (Plaintiff)
+        "player1": {"id": player1_id, "role": "Plaintiff", "arguments": []},
+        "player2": {"id": player2_id, "role": "Defendant", "arguments": []}
     }
 
-    return jsonify({"message": "Game started successfully", "game_id": game_id})
+    # Send the case details and role-specific file
+    response_data = {
+        "case_description": selected_case["description"],
+        "plaintiff_file": selected_case["plaintiff_file"],
+        "defendant_file": selected_case["defendant_file"]
+    }
+
+    return jsonify(response_data)
 
 # Endpoint to submit an argument
 @app.route('/api/submit_argument', methods=['POST'])
@@ -107,19 +66,21 @@ def submit_argument():
     if not game:
         return jsonify({"error": "Game not found"}), 404
 
+    # Check whose turn it is
     if game["turn"] != player_id:
         return jsonify({"error": "Not your turn"}), 403
 
+    # Append the argument to the corresponding player
     if player_id == game["player1"]["id"]:
         game["player1"]["arguments"].append(argument)
-        game["turn"] = game["player2"]["id"]
+        game["turn"] = game["player2"]["id"]  # Switch to the other player's turn
     else:
         game["player2"]["arguments"].append(argument)
         game["turn"] = game["player1"]["id"]
 
     return jsonify({"message": "Argument submitted successfully"})
 
-# Endpoint to get the verdict using GPT API
+# Endpoint to get the verdict
 @app.route('/api/verdict', methods=['POST'])
 def get_verdict():
     data = request.json
@@ -130,37 +91,19 @@ def get_verdict():
     if not game:
         return jsonify({"error": "Game not found"}), 404
 
+    # Ensure both players have submitted their arguments before proceeding
+    if not game["player1"]["arguments"] or not game["player2"]["arguments"]:
+        return jsonify({"error": "Both players must submit their arguments before getting a verdict"}), 400
+
+    # Fetch the arguments from both players
     plaintiff_args = " ".join(game["player1"]["arguments"])
     defendant_args = " ".join(game["player2"]["arguments"])
 
-    # Prepare the prompt for GPT
-    prompt = f"""
-    Case: {game['case']['case_name']}
-    Description: {game['case']['description']}
+    # Generate the verdict based on the arguments (for now, let's make it simple)
+    verdict = f"The plaintiff argued: {plaintiff_args}. The defendant argued: {defendant_args}. Verdict: Based on these arguments, the judge rules in favor of the {'Plaintiff' if len(plaintiff_args) > len(defendant_args) else 'Defendant'}."
 
-    Plaintiff's Arguments: {plaintiff_args}
-    Defendant's Arguments: {defendant_args}
+    return jsonify({"verdict": verdict})
 
-    Based on the arguments presented by both the plaintiff and the defendant, determine who should win the case and explain the reasoning behind your verdict.
-    """
-
-    try:
-        # Call GPT API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a judge evaluating a legal case. You are also a grumpy judge"},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=500,
-            temperature=0.7
-        )
-
-        verdict = response.choices[0].message['content']
-        return jsonify({"verdict": verdict})
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+# Run the Flask app
 if __name__ == '__main__':
     app.run(debug=True)
