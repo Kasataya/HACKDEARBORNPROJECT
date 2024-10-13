@@ -1,4 +1,4 @@
-/* src/HomePage.css */
+/* src/pages/Home.css */
 
 body {
     margin: 0;
@@ -46,11 +46,40 @@ body {
     flex-direction: column; /* Arrange items vertically */
     align-items: center; /* Center align buttons horizontally (optional) */
   }
+
+  .input-container {
+    display: flex; /* Enable flexbox layout for input and button */
+    align-items: center; /* Align input and button vertically */
+    width: 65%;
+  }
   
-  .play-button,
+  .game-code-input {
+    flex: 1;
+    width: 100%;
+    padding: 10px; /* Add padding to the input box */
+    border: 1px solid #ccc; /* Border for the input box */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 18px; /* Font size for input text */
+  }
+  
+  .play-button {
+    background-color: #ffffff;
+    color: #241911;
+    border: none;
+    border-radius: 5px;
+    padding: 11px 20px; /* Keep this to add padding around the text */
+    font-size: 18px;
+    cursor: pointer;
+    margin: 3px;
+    /* font-weight: 800; */
+    transition: background-color 0.3s;
+    display: inline-block; /* Ensures the button takes only the necessary width */
+    }
+
   .join-button {
-    background-color: #4caf50;
-    color: white;
+    background-color: #ffffff;
+    width: 65%;
+    color: #241911;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -62,7 +91,7 @@ body {
   
   .play-button:hover,
   .join-button:hover {
-    background-color: #45a049;
+    background-color: #cecece;
   }
   
   .rules {
