@@ -10,6 +10,19 @@
 
 ---
 
+## Features
+
+- **Role Selection**: Choose to play as either the plaintiff or the defendant, each with unique case files.
+- **Exclusive Case Files**: Receive confidential information that only your character knows, adding depth to your strategy.
+- **Turn-Based Gameplay**: Engage in structured debates, taking turns to present arguments and counterarguments.
+- **AI-Powered Judge**: An impartial AI judge evaluates the arguments and delivers a verdict based on logic and persuasion.
+- **Real-Time Interaction**: Play against friends or other players in real-time.
+- **Educational Value**: Enhance your critical thinking, legal reasoning, and persuasive communication skills.
+- **User-Friendly Interface**: Intuitive design for seamless user experience.
+- **Secure Communication**: Ensures that each player's case files are kept confidential from the opponent.
+
+---
+
 ## Technologies Used
 
 ### Frontend:
