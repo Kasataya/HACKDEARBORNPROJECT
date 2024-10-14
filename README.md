@@ -44,7 +44,7 @@
 
 **Project Maintainers:**
 - Mohammad El-Chami - [moechami](https://github.com/moechami) - [Email](mailto:moeelchami@gmail.com)
-- Mohamad Aboud - [MoeAboud](https://github.com/MoeAboud) - [Email](mailto:mikejoe200@gmail.com)
+- Mohamad Aboud - [MoeAboud](https://github.com/MoeAboud) - [Email](mailto:mohamadabboud200@outlook.com)
 - Kassem Ataya - [Kasataya](https://github.com/Kasataya) - [Email](mailto:kassemataya0@gmail.com)
 
 ---
