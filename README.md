@@ -12,29 +12,27 @@
 
 ## Technologies Used
 
-- **Frontend:**
-  - React.js
-  - Axios
-  - React Router DOM
-  - Firebase
+### Frontend:
+- React.js
+- Axios
+- React Router DOM
+- Firebase
 
-- **Backend:**
-  - Flask (Python)
-  - OpenAI API Integration
+### Backend:
+- Flask (Python)
+- OpenAI API Integration
 
-- **AI Integration:**
-  - OpenAI GPT-4 API
+### AI Integration:
+- OpenAI GPT-4 API
 
 ---
 
 ## Contact
 
-**Project Maintainers:** Mohammad El-Chami, Mohamad Aboud, Kassem Ataya 
-
-- **Emails:** moeelchami@gmail.com, kassemataya0@gmail.com
-- **GitHub:** [moechami](https://github.com/moechami)
-- [MoeAboud](https://github.com/MoeAboud)
-- [Kasataya](https://github.com/Kasataya)
+**Project Maintainers:**
+- Mohammad El-Chami - [moechami](https://github.com/moechami) - [Email](mailto:moeelchami@gmail.com)
+- Mohamad Aboud - [MoeAboud](https://github.com/MoeAboud) - [Email](mailto:mikejoe200@gmail.com)
+- Kassem Ataya - [Kasataya](https://github.com/Kasataya) - [Email](mailto:kassemataya0@gmail.com)
 
 ---
 
